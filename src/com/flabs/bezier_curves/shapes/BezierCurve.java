@@ -12,6 +12,10 @@ public class BezierCurve {
 	
 	private double tVal = 0;
 	
+	public BezierCurve() {
+		
+	}
+	
 	public BezierCurve(Pair p0, Pair p1, Pair p2, Pair p3) {
 		pointList[0] = p0;
 		pointList[1] = p1;
@@ -28,7 +32,7 @@ public class BezierCurve {
 		Pair p3 = pointList[3];
 		
 		
-		for(int i = 0; i <= 11; i++) {
+		for(int i = 0; tVal <= 1.0; i++) {
 //			int x = (int) (((Math.pow((1 - tVal), 2)) * p0.getFirstVal()) + (2 * (1 - tVal) * (tVal * p1.getFirstVal())) + (Math.pow(tVal, 2) * p2.getFirstVal()));
 //			int y = (int) (((Math.pow((1 - tVal), 2)) * p0.getSecondVal()) + (2 * (1 - tVal) * (tVal * p1.getSecondVal())) + (Math.pow(tVal, 2) * p2.getSecondVal()));
 			
@@ -39,11 +43,11 @@ public class BezierCurve {
 			
 			addBezierCoordinate(x, y);
 			
-			tVal += 0.1;
+			tVal += 0.02;
 		}
 	}
 	
-	private void addBezierCoordinate(final int x, final int y) {
+	public void addBezierCoordinate(final int x, final int y) {
 		bezierPlotPoints.add(new Pair(x, y));
 	}
 	
