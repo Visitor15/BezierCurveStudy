@@ -99,7 +99,7 @@ public class MainUI extends JFrame {
 			System.out.println("DRAWING CURVE AT: (" + p0.getFirstVal() + ", " + p0.getSecondVal() + ") & (" + p1.getFirstVal() + ", " + p1.getSecondVal() + ")");
 
 			if(i % 4 == 0) {
-				painter.fillOval(p1.getFirstVal() - 6, p1.getSecondVal() - 6, 12, 12);
+				painter.fillOval(p1.getFirstVal() - 4, p1.getSecondVal() - 4, 8, 8);
 			}
 
 			painter.drawLine(p0.getFirstVal(), p0.getSecondVal(), p1.getFirstVal(), p1.getSecondVal());
@@ -121,7 +121,7 @@ public class MainUI extends JFrame {
 			System.out.println("DRAWING CURVE AT: (" + p0.getFirstVal() + ", " + p0.getSecondVal() + ") & (" + p1.getFirstVal() + ", " + p1.getSecondVal() + ")");
 
 			if(i % 4 == 0) {
-				painter.fillOval(p1.getFirstVal() - 6, p1.getSecondVal() - 6, 12, 12);
+				painter.fillOval(p1.getFirstVal() - 4, p1.getSecondVal() - 4, 8, 8);
 				drawSlopeLine(p1, bezierCurve.getBezierPlotPointSlopes().get(i));
 			}
 
@@ -140,13 +140,14 @@ public class MainUI extends JFrame {
 //		Pair p0 = new Pair(((mRise * SCALE_FACTOR) - midPointX), ((mRun * SCALE_FACTOR) - midPointY));
 //		Pair p1 = new Pair(((mRise * SCALE_FACTOR) + midPointX), ((mRun * SCALE_FACTOR) + midPointY));
 		
-		Pair p0 = new Pair((Math.abs(mRise) - midPointX), Math.abs((mRun) - midPointY));
-		Pair p1 = new Pair(((mRise) + midPointX), ((mRun) + midPointY));
+		Pair p0 = new Pair((Math.abs((mRise * SCALE_FACTOR) - midPointX)), Math.abs((mRun * SCALE_FACTOR) - midPointY));
+		Pair p1 = new Pair(((mRise * SCALE_FACTOR) + midPointX), ((mRun * SCALE_FACTOR) + midPointY));
 		
 		Graphics painter = mainPanel.getGraphics();
 		painter.setColor(Color.GREEN);
 //		painter.drawLine(p0.getFirstVal(), p0.getSecondVal(), p1.getFirstVal(), p1.getSecondVal());
 		
+		painter.drawLine(midPointX, midPointY, p0.getFirstVal(), p0.getSecondVal());
 		painter.drawLine(midPointX, midPointY, p1.getFirstVal(), p1.getSecondVal());
 	}
 	

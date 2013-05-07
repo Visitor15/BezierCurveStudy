@@ -10,7 +10,7 @@ public class BezierCurve {
 	
 	private ArrayList<Fraction> plotPointSlopes = new ArrayList<Fraction>();
 	
-	private double mWeight = 1;
+	private double mWeight = 2;
 	
 	private double tVal = 0;
 	
@@ -38,8 +38,32 @@ public class BezierCurve {
 //			int x = (int) (((Math.pow((1 - tVal), 2)) * p0.getFirstVal()) + (2 * (1 - tVal) * (tVal * p1.getFirstVal())) + (Math.pow(tVal, 2) * p2.getFirstVal()));
 //			int y = (int) (((Math.pow((1 - tVal), 2)) * p0.getSecondVal()) + (2 * (1 - tVal) * (tVal * p1.getSecondVal())) + (Math.pow(tVal, 2) * p2.getSecondVal()));
 			
-			int x = (int) ((p0.getFirstVal() * Math.pow((1 - tVal), 3)) + (p1.getFirstVal() * 3 * Math.pow((1 - tVal), 2) * tVal) + (p2.getFirstVal() * 3 * (1 - tVal) * Math.pow(tVal, 2)) + (p3.getFirstVal() * Math.pow(tVal, 3)));
-			int y = (int) ((p0.getSecondVal() * Math.pow((1 - tVal), 3)) + (p1.getSecondVal() * 3 * Math.pow((1 - tVal), 2) * tVal) + (p2.getSecondVal() * 3 * (1 - tVal) * Math.pow(tVal, 2)) + (p3.getSecondVal() * Math.pow(tVal, 3)));
+//			double p0WeightedFirstVal = (mWeight / (1 + mWeight)) * p0.getFirstVal();
+//			double p0WeightedSecondVal = (mWeight / (1 + mWeight)) * p0.getSecondVal();
+//			
+//			double p1WeightedFirstVal = (mWeight / (1 + mWeight)) * p1.getFirstVal();
+//			double p1WeightedSecondVal = (mWeight / (1 + mWeight)) * p1.getSecondVal();
+//			
+//			double p2WeightedFirstVal = (mWeight / (1 + mWeight)) * p2.getFirstVal();
+//			double p2WeightedSecondVal = (mWeight / (1 + mWeight)) * p2.getSecondVal();
+//			
+//			double p3WeightedFirstVal = (mWeight / (1 + mWeight)) * p3.getFirstVal();
+//			double p3WeightedSecondVal = (mWeight / (1 + mWeight)) * p3.getSecondVal();
+			
+			double p0WeightedFirstVal = p0.getFirstVal();
+			double p0WeightedSecondVal = p0.getSecondVal();
+			
+			double p1WeightedFirstVal = p1.getFirstVal();
+			double p1WeightedSecondVal = p1.getSecondVal();
+			
+			double p2WeightedFirstVal = p2.getFirstVal();
+			double p2WeightedSecondVal = p2.getSecondVal();
+			
+			double p3WeightedFirstVal = p3.getFirstVal();
+			double p3WeightedSecondVal = p3.getSecondVal();
+					
+			int x = (int) ((p0WeightedFirstVal * Math.pow((1 - tVal), 3)) + (p1WeightedFirstVal * 3 * Math.pow((1 - tVal), 2) * tVal) + (p2WeightedFirstVal * 3 * (1 - tVal) * Math.pow(tVal, 2)) + (p3WeightedFirstVal * Math.pow(tVal, 3)));
+			int y = (int) ((p0WeightedSecondVal * Math.pow((1 - tVal), 3)) + (p1WeightedSecondVal * 3 * Math.pow((1 - tVal), 2) * tVal) + (p2WeightedSecondVal * 3 * (1 - tVal) * Math.pow(tVal, 2)) + (p3WeightedSecondVal * Math.pow(tVal, 3)));
 			
 			System.out.println("GENERATED COORDINATE: " + x + " ," + y);
 			
