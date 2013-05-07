@@ -8,6 +8,8 @@ public class BezierCurve {
 	
 	private ArrayList<Pair> bezierPlotPoints = new ArrayList<Pair>();
 	
+	private ArrayList<Fraction> plotPointSlopes = new ArrayList<Fraction>();
+	
 	private double mWeight = 1;
 	
 	private double tVal = 0;
@@ -44,14 +46,43 @@ public class BezierCurve {
 			addBezierCoordinate(x, y);
 			
 			tVal += 0.02;
+			
+			if(i > 0) {
+				plotPointSlopes.add(calcSlope(this.getBezierPlotPoints().get(i - 1), this.getBezierPlotPoints().get(i)));
+			}
+			else {
+				plotPointSlopes.add(calcSlope(this.getBezierPlotPoints().get(i), this.getBezierPlotPoints().get(i)));
+			}
 		}
+	}
+	
+	public Fraction calcSlope(final Pair p0, final Pair p1) {
+		int deltaX = p1.getFirstVal() - p0.getFirstVal();
+		int deltaY = p1.getSecondVal() - p0.getSecondVal();
+		
+		Fraction fraction = new Fraction(deltaX, deltaY);
+		
+		System.out.println("ADDING SLOPE: " + fraction.toString());
+		
+		return fraction;
 	}
 	
 	public void addBezierCoordinate(final int x, final int y) {
 		bezierPlotPoints.add(new Pair(x, y));
+		
+		if(bezierPlotPoints.size() > 1) {
+			plotPointSlopes.add(calcSlope(this.getBezierPlotPoints().get(bezierPlotPoints.size() - 2), this.getBezierPlotPoints().get(bezierPlotPoints.size() - 1)));
+		}
+		else {
+			plotPointSlopes.add(calcSlope(this.getBezierPlotPoints().get(bezierPlotPoints.size() - 1), this.getBezierPlotPoints().get(bezierPlotPoints.size() - 1)));
+		}
 	}
 	
 	public ArrayList<Pair> getBezierPlotPoints() {
 		return this.bezierPlotPoints;
+	}
+	
+	public ArrayList<Fraction> getBezierPlotPointSlopes() {
+		return this.plotPointSlopes;
 	}
 }

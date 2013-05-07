@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import com.flabs.bezier_curves.shapes.BezierCurve;
+import com.flabs.bezier_curves.shapes.Fraction;
 import com.flabs.bezier_curves.shapes.LineUtil;
 import com.flabs.bezier_curves.shapes.Pair;
 
@@ -43,6 +44,7 @@ public class MainUI extends JFrame {
 		}
 
 		this.setPreferredSize(new Dimension(X_WIDTH, Y_HEIGHT));
+		this.setBackground(Color.BLACK);
 
 		mainPanel = new Canvas();
 		mainPanel.setSize(new Dimension(X_WIDTH, Y_HEIGHT));
@@ -66,7 +68,7 @@ public class MainUI extends JFrame {
 			Pair p1 = plotList.get(plotList.size() - 1);
 
 			Graphics line = mainPanel.getGraphics();
-			line.setColor(Color.BLACK);
+			line.setColor(Color.WHITE);
 			line.drawLine(p0.getFirstVal(), p0.getSecondVal(), p1.getFirstVal(), p1.getSecondVal());
 		}
 		if(plotList.size() > 3) {
@@ -120,10 +122,32 @@ public class MainUI extends JFrame {
 
 			if(i % 4 == 0) {
 				painter.fillOval(p1.getFirstVal() - 6, p1.getSecondVal() - 6, 12, 12);
+				drawSlopeLine(p1, bezierCurve.getBezierPlotPointSlopes().get(i));
 			}
 
 			painter.drawLine(p0.getFirstVal(), p0.getSecondVal(), p1.getFirstVal(), p1.getSecondVal());
 		}
+	}
+	
+	private void drawSlopeLine(final Pair mPoint, final Fraction mSlope) {
+		int SCALE_FACTOR = 2;
+		
+		int midPointX = mPoint.getFirstVal();
+		int midPointY = mPoint.getSecondVal();
+		int mRise = mSlope.getNumerator();
+		int mRun = mSlope.getDenominator();
+		
+//		Pair p0 = new Pair(((mRise * SCALE_FACTOR) - midPointX), ((mRun * SCALE_FACTOR) - midPointY));
+//		Pair p1 = new Pair(((mRise * SCALE_FACTOR) + midPointX), ((mRun * SCALE_FACTOR) + midPointY));
+		
+		Pair p0 = new Pair((Math.abs(mRise) - midPointX), Math.abs((mRun) - midPointY));
+		Pair p1 = new Pair(((mRise) + midPointX), ((mRun) + midPointY));
+		
+		Graphics painter = mainPanel.getGraphics();
+		painter.setColor(Color.GREEN);
+//		painter.drawLine(p0.getFirstVal(), p0.getSecondVal(), p1.getFirstVal(), p1.getSecondVal());
+		
+		painter.drawLine(midPointX, midPointY, p1.getFirstVal(), p1.getSecondVal());
 	}
 	
 	private void drawAverageBezierCurve() {
@@ -139,8 +163,6 @@ public class MainUI extends JFrame {
 				
 				int averagedX = (c1X + c2X) / 2;
 				int averagedY = (c1Y + c2Y) / 2;
-				
-				System.out.println("Preparing new averaged curve");
 				
 				
 				averagedCurve.addBezierCoordinate(averagedX, averagedY);
